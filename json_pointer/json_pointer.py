@@ -42,9 +42,9 @@ def get(object_: JSON, pointer: str) -> JSON:
         key = key_name(key)
 
         if isinstance(object_, list) and is_valid_number(key):
-            key = int(key)
+            key: int = int(key)  # type: ignore[no-redef]
 
-        object_ = object_[key]
+        object_ = object_[key]  # type: ignore[index,call-overload]
 
     return object_
 
@@ -63,12 +63,12 @@ def set(object_: JSON, pointer: str, value: JSON) -> None:
 
         if isinstance(object_, list):
             if is_valid_number(key):
-                key = int(key)
+                key: int = int(key)  # type: ignore[no-redef]
             elif key == "-":
                 break
 
         try:
-            object_ = object_[key]
+            object_ = object_[key]  # type: ignore[index,call-overload]
         except KeyError:
             break
 
@@ -81,10 +81,10 @@ def set(object_: JSON, pointer: str, value: JSON) -> None:
 
             prev.append(value)
         else:
-            prev[key] = value
+            prev[key] = value  # type: ignore[call-overload]
 
     else:  # always dict
         if not is_last_key:
             raise ValueError(f"Pointer to non-existing key must be the last item")
 
-        prev[key] = value
+        prev[key] = value  # type: ignore[index,call-overload]
