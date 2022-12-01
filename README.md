@@ -23,4 +23,7 @@ data = {
 print(json_pointer.get(data, "/foo"))  # ['bar', 'baz']
 print(json_pointer.get(data, "/foo/0"))  # "bar"
 print(json_pointer.get(data, "/"))  # 0
+
+json_pointer.set(data, "/foo/1", "replace")
+print(json_pointer.get(data, "/foo/1"))  # replace
 ```
